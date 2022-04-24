@@ -1,16 +1,17 @@
 <template>
   <div>
-    <p>Login {{ name }}</p>
+    <p>Login name is {{ userInfo.username }}</p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, inject } from "vue";
+import { UserInfoStore, userInfoKey } from "@/composables/useUserInfo";
 
 export default defineComponent({
   setup() {
-    const name = ref("taro");
-    return { name };
+    const { userInfo } = inject(userInfoKey) as UserInfoStore;
+    return { userInfo };
   },
 });
 </script>

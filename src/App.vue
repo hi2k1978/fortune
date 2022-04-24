@@ -4,23 +4,24 @@
 	 <router-link to="/">Home</router-link> |
 	 <router-link to="/about">About</router-link>
 	 </nav> -->
-  <router-view style="margin: auto" />
+  <router-view />
   <Footer id="footer" />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, provide } from "vue";
 import Header from "@/components/TheHeader.vue";
 import Footer from "@/components/TheFooter.vue";
-
+import useUserInfo, { userInfoKey } from "@/composables/useUserInfo";
+import useFortuneInfo, { fortuneInfoKey } from "@/composables/useFortuneInfo";
 export default defineComponent({
   components: {
     Header,
     Footer,
   },
   setup() {
-    const name = ref("taro");
-    return { name };
+    provide(userInfoKey, useUserInfo());
+    provide(fortuneInfoKey, useFortuneInfo());
   },
 });
 </script>
