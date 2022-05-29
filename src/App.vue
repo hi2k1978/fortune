@@ -12,16 +12,15 @@
 import { defineComponent, provide } from "vue";
 import Header from "@/components/TheHeader.vue";
 import Footer from "@/components/TheFooter.vue";
-import useUserInfo, { userInfoKey } from "@/composables/useUserInfo";
-import useFortuneInfo, { fortuneInfoKey } from "@/composables/useFortuneInfo";
+import useLoad, { loadKey } from "@/composables/useLoad";
+
 export default defineComponent({
   components: {
     Header,
     Footer,
   },
   setup() {
-    provide(userInfoKey, useUserInfo());
-    provide(fortuneInfoKey, useFortuneInfo());
+    provide(loadKey, useLoad());
   },
 });
 </script>
