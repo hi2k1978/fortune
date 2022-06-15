@@ -1,9 +1,17 @@
 import { createStore } from "vuex";
+import { prefectureStore } from "./prefecture";
+import { fruitsStore } from "./fruits";
+
+const rootState = {};
+export type RootState = typeof rootState;
 
 export default createStore({
-  state: {},
+  state: rootState,
   getters: {},
   mutations: {},
   actions: {},
-  modules: {},
+  modules: {
+    prefecture: prefectureStore,
+    fruits: fruitsStore,
+  },
 });
