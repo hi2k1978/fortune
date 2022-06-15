@@ -7,8 +7,8 @@ export type PrefectureValue = {
   selected: boolean;
 };
 const prefectureState = {
-  prefectureKeyList: ["tokyo", "okayama", "gunma"],
-  prefectureMap: new Map<PrefectureKey, PrefectureValue>([
+  keys: ["tokyo", "okayama", "gunma"],
+  items: new Map<PrefectureKey, PrefectureValue>([
     ["tokyo", { name: "東京", selected: false }],
     ["okayama", { name: "岡山", selected: false }],
     ["gunma", { name: "群馬", selected: false }],
@@ -20,16 +20,16 @@ export const prefectureStore: Module<PrefectureState, RootState> = {
   namespaced: true,
   state: prefectureState,
   getters: {
-    prefectureKeyList: (state: PrefectureState) => state.prefectureKeyList,
-    prefectureMap: (state: PrefectureState) => state.prefectureMap,
+    keys: (state: PrefectureState) => state.keys,
+    items: (state: PrefectureState) => state.items,
 
     isSelected: (state: PrefectureState) => {
       return (key: PrefectureKey) =>
-        (state.prefectureMap.get(key) as PrefectureValue).selected;
+        (state.items.get(key) as PrefectureValue).selected;
     },
-    selectedList: (state: PrefectureState) => {
+    selected: (state: PrefectureState) => {
       const dest: string[] = [];
-      for (const entry of state.prefectureMap.entries()) {
+      for (const entry of state.items.entries()) {
         if (entry[1].selected) dest.push(entry[0]);
       }
       return dest;
@@ -37,7 +37,7 @@ export const prefectureStore: Module<PrefectureState, RootState> = {
   },
   mutations: {
     toggle(state: PrefectureState, key: PrefectureKey) {
-      const target = state.prefectureMap.get(key) as PrefectureValue;
+      const target = state.items.get(key) as PrefectureValue;
       target.selected = !target.selected;
     },
   },

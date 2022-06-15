@@ -16,8 +16,8 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const store = useStore();
-    const id = route.params.id;
-    const target = store.state.fruits.fruitsMap.get(id);
+    const key = store.getters["fruits/selected"];
+    const target = store.getters["fruits/item"](key);
     const goBack = async () => {
       router.push({ name: "PrefectureView" });
     };

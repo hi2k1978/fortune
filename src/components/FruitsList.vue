@@ -1,6 +1,6 @@
 <template>
   <div class="fruits-list-container">
-    <div v-for="[key, val] in [...fruits]" :key="key">
+    <div v-for="[key, val] in [...items]" :key="key">
       <div @click="select(key)" :class="isSelectedClass(key)">
         {{ val.name }}: {{ val.price }}円
       </div>
@@ -19,7 +19,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = useStore();
-    const fruits = store.getters["fruits/fruitsMap"];
+    const items = store.getters["fruits/items"];
 
     const isSelectedClass = (target: FruitsKey) => {
       if (target && store.getters["fruits/isSelected"](target)) {
@@ -38,7 +38,7 @@ export default defineComponent({
       }
     };
     return {
-      fruits,
+      items,
       select,
       isSelectedClass,
       handleSubmit,

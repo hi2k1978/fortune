@@ -1,6 +1,6 @@
 <template>
   <div class="prefecture-list-container">
-    <div v-for="[key, val] in [...prefecture]" :key="key">
+    <div v-for="[key, val] in [...items]" :key="key">
       <div @click="toggle(key)" :class="isSelectedClass(key)">
         {{ val.name }}
       </div>
@@ -19,7 +19,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     //const prefecture = store.state.prefecture.prefectureMap;
-    const prefecture = store.getters["prefecture/prefectureMap"];
+    const items = store.getters["prefecture/items"];
     const isSelectedClass = (target: PrefectureKey) => {
       if (store.getters["prefecture/isSelected"](target)) {
         return "selected";
@@ -29,12 +29,12 @@ export default defineComponent({
       store.commit("prefecture/toggle", target);
     };
     const handleSubmit = async () => {
-      const selected = store.getters["prefecture/selectedList"];
+      const selected = store.getters["prefecture/selected"];
       if (selected && selected.length > 0)
         await store.dispatch("fruits/fetch", selected);
     };
     return {
-      prefecture,
+      items,
       toggle,
       isSelectedClass,
       handleSubmit,

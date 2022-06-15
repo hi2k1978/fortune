@@ -9,8 +9,8 @@ export type FruitsValue = {
 };
 const fruitsState = {
   selected: null as FruitsKey | null,
-  fruitsKeyList: [] as FruitsKey[],
-  fruitsMap: new Map<FruitsKey, FruitsValue>([]),
+  keys: [] as FruitsKey[],
+  items: new Map<FruitsKey, FruitsValue>([]),
 };
 
 type FruitsState = typeof fruitsState;
@@ -20,12 +20,15 @@ export const fruitsStore: Module<FruitsState, RootState> = {
   state: fruitsState,
   getters: {
     selected: (state: FruitsState) => state.selected,
-    fruitsKeyList: (state: FruitsState) => state.fruitsKeyList,
-    fruitsMap: (state: FruitsState) => state.fruitsMap,
-    isSelected: (state: FruitsState) => {
-      return (key: FruitsKey) => key == state.selected;
+    keys: (state: FruitsState) => state.keys,
+    items: (state: FruitsState) => state.items,
+    item: (state: FruitsState) => {
+      return (key: FruitsKey) => state.items.get(key);
     },
-    size: (state: FruitsState) => state.fruitsMap.size,
+    isSelected: (state: FruitsState) => {
+      return (key: FruitsKey) => key === state.selected;
+    },
+    size: (state: FruitsState) => state.items.size,
   },
   mutations: {
     select(state: FruitsState, key: FruitsKey) {
@@ -36,10 +39,10 @@ export const fruitsStore: Module<FruitsState, RootState> = {
         const key = item.key;
         delete item["key"];
         const value = item;
-        state.fruitsMap.set(key, value);
+        state.items.set(key, value);
       }
-      state.fruitsKeyList = Array.from(state.fruitsMap.keys());
-      state.fruitsMap.forEach((value, key) => {
+      state.keys = Array.from(state.items.keys());
+      state.items.forEach((value, key) => {
         console.log(key, value);
       });
     },
